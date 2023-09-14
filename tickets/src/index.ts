@@ -14,6 +14,7 @@ const start = async () => {
     await natsWrapper.connect('ticketing', 'abc', 'http://nats-srv:4222'); // 'ticketing' is the id we assiged in the deployment file
     natsWrapper.client.on('close', () => {
       console.log('NATS connection closed');
+      console.log('Exit ticket process');
       process.exit();
     });
     process.on('SIGINT', () => natsWrapper.client.close());
