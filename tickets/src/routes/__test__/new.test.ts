@@ -3,6 +3,8 @@ import request from 'supertest';
 import app from '../../app';
 import Ticket  from '../../models/ticket';
 
+import { natsWrapper } from '../../nats-wrapper';
+
 it('AC01: has a route handler listening to /api/tickets for post request', async () => {
   const response = await request(app)
     .post('/api/tickets')
@@ -93,4 +95,19 @@ it('AC06: returns a status other than 401 of the user is signed in', async () =>
     .send({});
 
   expect(response.status).not.toEqual(401);
+})
+
+it('AC07: publishes an event', async () => {
+  const title = 'lsjdkfk';
+
+  await request(app)
+    .post('/api/tickets')
+    .set('Cookie', global.signin())
+    .send({
+      title,
+      price: 20,
+    })
+    .expect(201);
+
+    expect(natsWrapper.client.publish).toHaveBeenCalled();
 })
