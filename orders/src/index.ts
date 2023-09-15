@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import app from './app';
+import { app } from './app';
 import { natsWrapper } from './nats-wrapper';
 
 const start = async () => {
@@ -34,9 +34,9 @@ const start = async () => {
 
     await mongoose.connect(process.env.MONGO_URI);
 
-    console.log('Connected Tickets Service to MongoDb');
+    console.log('Connected Orders service to MongoDb');
   } catch (err) {
-    console.error(`Tickets Service could not connect to MongoDB: ${err}`);
+    console.error(`Orders Service could not connect to MongoDB: ${err}`);
   }
 
   app.listen(3000, () => {
