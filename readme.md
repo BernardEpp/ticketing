@@ -64,7 +64,7 @@ To setup a new node module, create a new directory, cd into it and run:
 To setup TypeScript run:
 
 ```
-   ts --init
+   tsc --init
 ```
 
 ## Comments
