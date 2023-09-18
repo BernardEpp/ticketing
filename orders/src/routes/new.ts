@@ -1,10 +1,13 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
-import { requireAuth, validateRequest } from '@bernard-tickets/common';
+import { BadRequestError, NotFoundError, requireAuth, validateRequest } from '@bernard-tickets/common';
 import mongoose from 'mongoose';
-
+import { Ticket } from '../models/ticket';
+import { Order, OrderStatus } from '../models/order';
 
 const router = express.Router();
+
+const EXPIRATION_INTERVAL_SEC = 15 * 60; //TODO: extract to env variable
 
 router.post('/api/orders', 
   requireAuth, 
@@ -17,7 +20,35 @@ router.post('/api/orders',
   ],
   validateRequest,
   async (req: Request, res: Response) => {
-    res.send({});
+    const { ticketId } = req.body;
+
+    // find the ticket in the db 
+    const ticket = await Ticket.findById(ticketId);
+    if (!ticket) {
+      throw new NotFoundError();
+    }
+
+    // ensure ticket is not reserved by someone else
+    const isReserved = await ticket.isReserved();
+    if (isReserved) {
+      throw new BadRequestError('The Ticket is already reserved');
+    }
+
+    // calculate expiration date 
+    const expiration = new Date();
+    expiration.setSeconds(expiration.getSeconds() + EXPIRATION_INTERVAL_SEC);
+    
+    // build order and save it
+    const order = Order.build({
+      userId: req.currentUser!.id,
+      status: OrderStatus.Created,
+      expiresAt: expiration,
+      ticket,
+    });
+    await order.save();
+
+    // publish order created event
+    res.status(201).send(order);
   }
 );
 

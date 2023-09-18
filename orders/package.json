@@ -1,7 +1,7 @@
 {
   "name": "orders",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is the service that handles the customer orders. It's internal functionality is very similar to the tickets service.",
   "main": "index.js",
   "scripts": {
     "start": "ts-node-dev --poll src/index.ts",
@@ -33,7 +33,7 @@
     "typescript": "^5.1.6"
   },
   "devDependencies": {
-    "@types/jest": "^29.5.4",
+    "@types/jest": "^29.5.5",
     "@types/supertest": "^2.0.12",
     "jest": "^29.6.4",
     "mongodb-memory-server": "^8.15.1",
