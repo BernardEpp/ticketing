@@ -2,8 +2,6 @@
 
 This is a ticketing application using a microservice architecture.
 
-This is part of a course by Stephen Grider on udemy.
-
 The purpose of this project is to get familiar how microservice applications works and to build one. If working, this should be scalable and production ready code (except some minor todos).
 
 This project uses technologies such as Kubernetes, Docker, Node, Next JS / React, axios + express, NATS Streaming Server and Jest for testing.
@@ -69,6 +67,7 @@ To setup TypeScript run:
 
 ## Comments
 
+This is part of a course by Stephen Grider -one of my favorite JS teachers - on udemy.
 Some more comments
 
 ## Backlog
