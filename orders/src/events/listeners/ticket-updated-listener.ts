@@ -1,15 +1,17 @@
 import { Message } from 'node-nats-streaming';
-import { Subjects, TicketUpdatedEvent } from '@bernard-tickets/common';
+import { Subjects, TicketUpdatedEvent, Listener } from '@bernard-tickets/common';
 import { Ticket } from '../../models/ticket';
 import { queueGroupName } from './queue-group-name';
-import { Listener } from './base-listener'; //TODO: use listener from common project once bug is solved
 
 class TicketUpdatedListener extends Listener<TicketUpdatedEvent> {
   subject: Subjects.TicketUpdated = Subjects.TicketUpdated;
   queueGroupName = queueGroupName;
 
   async onMessage(data: TicketUpdatedEvent['data'], msg: Message) {
-    const ticket = await Ticket.findById(data.id);
+    const ticket = await Ticket.findOne({
+      _id: data.id,
+      version: data.version -1
+    });
 
     if (!ticket) {
       throw new Error('Ticket not found');

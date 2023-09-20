@@ -6,7 +6,7 @@ interface Event {
   data: any;
 }
 
-//TODO: this is for debuging only. I want to use the base class in the common project. But for some reason I get a compile error with it that the ide does not detect.
+// TODO: consider to remove this class and use the one in the commons project instead.
 abstract class Listener<T extends Event> {
   abstract subject: T['subject'];
   /**

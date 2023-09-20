@@ -2,8 +2,7 @@ import { Message } from 'node-nats-streaming';
 import { Subjects, TicketCreatedEvent } from '@bernard-tickets/common';
 import { Ticket } from '../../models/ticket';
 import { queueGroupName } from './queue-group-name';
-// import { Listener } from '@bernard-tickets/common';
-import { Listener }  from './base-listener'; //TODO: use listener from common project once bug is solved
+import { Listener } from '@bernard-tickets/common';
 
 class TicketCreatedListener extends Listener<TicketCreatedEvent> {
   subject: Subjects.TicketCreated = Subjects.TicketCreated;
