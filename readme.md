@@ -65,16 +65,45 @@ To setup TypeScript run:
    tsc --init
 ```
 
+## Kubectl Commands
+
+Some useful kubectl commands that I tend to forget.
+
+Run a command inside a pod:
+
+```
+   kubectl exec -it [pod_name] [cmd]
+```
+
+So you can open a shell inside the container (which is inside of the pod) by:
+
+```
+   kubectl exec -it [pod_name] sh
+```
+
+If you run more than one container in a pod, kubectl will ask you which one you want to access.
+
+To get all logs of a pod run:
+
+```
+   kubectl logs [pod_name]
+```
+
+To manually restart a pod, delete it:
+
+```
+   kubectl delete pod [pod_name]
+```
+
 ## Comments
 
-This is part of a course by Stephen Grider -one of my favorite JS teachers - on udemy.
+This is part of a course by Stephen Grider - one of my favorite JS teachers - on udemy.
 Some more comments
 
 ## Backlog
 
-- ~~ strikthrouhgs can be used for done tasks ~~
-- move commons project elsewhere
-- Create and push git repo on github
+- figure out how to use the mongo shell to look at the db inside a pot
+- fix compile error in base-listener class in common project
 - Clarify usage of named and default exports and make it more consistent
 - Write proper source code doc
 - Run Linter?
