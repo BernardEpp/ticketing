@@ -7,6 +7,7 @@ import { natsWrapper } from '../../nats-wrapper';
 it('AC01: marks an order as cancelled', async () => {
   // create ticket
   const ticket = Ticket.build({
+    id: 'lsjkadfhl',
     title: 'concert',
     price: 20
   });
@@ -37,6 +38,7 @@ it('AC01: marks an order as cancelled', async () => {
 it('emits an order cancelled event', async () => {
   // create ticket
   const ticket = Ticket.build({
+    id: 'lsjkadfhl',
     title: 'concert',
     price: 20
   });
