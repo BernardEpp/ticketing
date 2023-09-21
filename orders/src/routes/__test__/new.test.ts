@@ -20,7 +20,7 @@ it('AC01: returns error if ticket does not exist', async () => {
 
 it ('AC02: returns error if the ticket is reserved', async () => {
   const ticket = Ticket.build({
-    id:'aslkdfjl',
+    id: new mongoose.Types.ObjectId().toHexString(),
     title: 'concert',
     price: 20
   });
@@ -42,7 +42,7 @@ it ('AC02: returns error if the ticket is reserved', async () => {
 
 it('AC03: reserves a ticket', async () => {
   const ticket = Ticket.build({
-    id: 'sdfkasdf',
+    id: new mongoose.Types.ObjectId().toHexString(),
     title: 'concert',
     price: 20,
   });
@@ -57,7 +57,7 @@ it('AC03: reserves a ticket', async () => {
 
 it('AC04: emits an order created event', async () => {
   const ticket = Ticket.build({
-    id: 'sadfjk',
+    id: new mongoose.Types.ObjectId().toHexString(),
     title: 'concert',
     price: 20,
   });
