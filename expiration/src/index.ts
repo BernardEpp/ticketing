@@ -1,4 +1,5 @@
 import { natsWrapper } from './nats-wrapper';
+import { OrderCreatedListener } from './events/listeners/order-created-listener';
 
 const start = async () => {
   if (!process.env.NATS_CLIENT_ID) {
@@ -15,7 +16,7 @@ const start = async () => {
     await natsWrapper.connect(
       process.env.NATS_CLUSTER_ID,
       process.env.NATS_CLIENT_ID,
-      process.env.NATS_URL); // 'ticketing' is the id we assiged in the deployment file
+      process.env.NATS_URL); 
     natsWrapper.client.on('close', () => {
       console.log('NATS connection closed');
       console.log('Exit ticket process');
@@ -24,8 +25,10 @@ const start = async () => {
     process.on('SIGINT', () => natsWrapper.client.close());
     process.on('SIGTERM', () => natsWrapper.client.close());
 
+    new OrderCreatedListener(natsWrapper.client).listen();
+
   } catch (err) {
-    console.error(`Tickets Service could not connect to MongoDB: ${err}`);
+    console.error(`Expiration Service could not be setup correctly. Error: ${err}`);
   } 
 };
 

@@ -9,7 +9,7 @@ import { natsWrapper } from '../nats-wrapper';
 
 const router = express.Router();
 
-const EXPIRATION_INTERVAL_SEC = 15 * 60; //TODO: extract to env variable
+const EXPIRATION_INTERVAL_SEC = 3 * 60; // expire orders after 15 minutes //TODO: extract to env variable
 
 router.post('/api/orders', 
   requireAuth, 
