@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
-import { validateRequest, NotFoundError, requireAuth, NotAuthorizedError } from '@bernard-tickets/common';
+import { validateRequest, NotFoundError, requireAuth, NotAuthorizedError, BadRequestError } from '@bernard-tickets/common';
 import Ticket from '../models/ticket';
 import { TicketUpdatedPublisher } from '../events/publishers/ticket-updated-publisher';
 import { natsWrapper } from '../nats-wrapper';
@@ -20,6 +20,10 @@ async (req: Request, res: Response) => {
   if(!ticket) {
     throw new NotFoundError();
   }
+
+if (ticket.orderId) {
+  throw new BadRequestError('Ticket is reserved. You cannot update it right now.');
+}
 
   if (ticket.userId !== req.currentUser!.id) {
     throw new NotAuthorizedError();
