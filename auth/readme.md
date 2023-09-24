@@ -15,7 +15,7 @@ The JWT is signed with a secret that is made available to the services as an env
 The secret (jwt-secret) is created by running a imperative command in kubernetes:
 
 ```
-kubectl create secret generic jwt-secret --from-literal=JWT_KEY=asdf
+kubectl create secret generic jwt-secret --from-literal JWT_KEY=asdf
 ```
 
 IMPORTANT: Do not share this command. It is a security risk. However you need to now it every time you spin up a new kubernetes cluster. Also, in production you would use a more complex string than 'asdf'.
