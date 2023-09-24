@@ -65,6 +65,15 @@ To setup TypeScript run:
    tsc --init
 ```
 
+## NATS Connection Error
+
+When starting up the cluster sometimes some pods cannot connect to nats streaming server.
+If this happens, you can try to restart the individual pod by deleting it:
+
+```
+   kubectl delete pod [pod_name]
+```
+
 ## Kubectl Commands
 
 Some useful kubectl commands that I tend to forget.
@@ -106,7 +115,7 @@ Some more comments
 - fix compile error in base-listener class in common project
 - Clarify usage of named and default exports and make it more consistent
 - Write proper source code doc
-- Run Linter?
+- Run Linter? Transpile (babel)?
 - More tests?
 - Provision cluster with tf?
 - Replace NATS with Kafka or other alternative?
