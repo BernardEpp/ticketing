@@ -8,7 +8,7 @@ interface PaymentAttrs {
 
 interface PaymentDoc extends mongoose.Document {
   orderId: string;
-  stripId: string;
+  stripeId: string;
   // NOTE: we don't include a version property as payments do not intend to change. However, it can be good practice to include it anyway
 }
 
