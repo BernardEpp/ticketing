@@ -2,6 +2,8 @@ import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 import { requireAuth, validateRequest, BadRequestError, NotFoundError, NotAuthorizedError, OrderStatus } from '@bernard-tickets/common';
 import { Order } from '../models/order';
+import { stripe } from '../stripe';
+import { Payment } from '../models/payment';
 
 const router = express.Router();
 
@@ -35,8 +37,19 @@ async (req: Request, res: Response) => {
     throw new BadRequestError('Cannot pay for an cancelled order');
   }
 
-  res.send({ success: true });
+  
+  const charge = await stripe.charges.create({
+    currency: 'eur',
+    amount: order.price * 100,
+    source: token,
+  });
+  const payment = await Payment.build({
+    orderId,
+    stripeId: charge.id
+  });
+  await payment.save()
 
+  res.status(201).send({ success: true });
 
 });
 

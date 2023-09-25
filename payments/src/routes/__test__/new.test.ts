@@ -3,6 +3,9 @@ import mongoose from 'mongoose';
 import request from 'supertest';
 import app from '../../app';
 import { Order } from '../../models/order';
+import { stripe } from '../../stripe'; // we mock this but we still need the ts definition
+
+// jest.mock('../../stripe');
 
 it('AC01: returns a 404 when the order does not exist', async () => {
   await request(app)
@@ -57,6 +60,36 @@ it('AC03: returns a 400 when purchasing a cancelled order', async () => {
       token: 'alskdjf'
     })
     .expect(400);
+});
 
+it('AC04: returns a 204 with valid inputs', async () => {
+  const userId = new mongoose.Types.ObjectId().toHexString();
+
+  const price = Math.floor(Math.random() * 100000);
+  const order = Order.build({
+    id:new mongoose.Types.ObjectId().toHexString(),
+    userId: userId,
+    version: 0,
+    price: price,
+    status: OrderStatus.Created
+  })
+  await order.save();
+
+  await request(app)
+    .post('/api/payments')
+    .set('Cookie', global.signin(userId))
+    .send({
+      token: 'tok_visa',
+      orderId: order.id
+    })
+    .expect(201);
+
+  const stripeCharges = await stripe.charges.list({ limit: 50 });
+  const stripeCharge = stripeCharges.data.find(charge => {
+    return charge.amount === price * 100
+  });
+
+  expect(stripeCharge).toBeDefined();
+  expect(stripeCharge!.currency).toEqual('eur');
 
 });
