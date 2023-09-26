@@ -1,30 +1,42 @@
-import buildClient from '../api/build-client';
+import Link from 'next/link';
 
-const LandingPage = ({ currentUser }) => {
-  console.log('rendering currentUser');
-  console.log(currentUser);
-  // return (
-  //   <div>
-  //     <h1>Landing Page</h1>
-  //     <div>You are: {currentUser}</div>
-  //   </div>
-  // );
-  return currentUser ? (
-    <h1>You are signed in</h1>
-  ) : (
-    <h1>You are not signed in.</h1>
+const LandingPage = ({ currentUser, tickets }) => {
+  console.log(tickets);
+
+  const ticketList = tickets.map((ticket) => {
+    return (
+      <tr key={ticket.id}>
+        <td>{ticket.title}</td>
+        <td>{ticket.price}</td>
+        <td>
+          <Link href="/tickets/[ticketId]" as={`/tickets/${ticket.id}`}>
+            View
+          </Link>
+        </td>
+      </tr>
+    );
+  });
+  return (
+    <div>
+      <h1>Tickets</h1>
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Link</th>
+          </tr>
+        </thead>
+        <tbody>{ticketList}</tbody>
+      </table>
+    </div>
   );
 };
 
-LandingPage.getInitialProps = async (context) => {
-  console.log('LANDING PAGE!');
-  const client = buildClient(context);
-  const { data } = await client.get('/api/users/currentuser').catch((err) => {
-    console.log(`Error when requesting the current user: ${err.message}`);
-    return { data: {} }; //todo: this type handling is kinda ugly and unnecessary and there also seem to be a next warning associated with it.
-  });
+LandingPage.getInitialProps = async (context, client, currentUser) => {
+  const { data } = await client.get('/api/tickets');
 
-  return data;
+  return { tickets: data }; // this will be fed back into the (initial) props of the component (landing page)
 };
 
 export default LandingPage;

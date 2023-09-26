@@ -51,6 +51,12 @@ And make sure all related files reference the correct docker image and that the 
 
    34.77.218.113 ticketing.dev
 
+## How to use
+
+First sign up or in if you already have an account. Note, that all data gets lost when you restart the cluster.
+
+Now you can sell (create) tickets and view available tickets and purchase them.
+
 ## Setup a new service
 
 To setup a new node module, create a new directory, cd into it and run:
@@ -119,3 +125,4 @@ Some more comments
 - More tests?
 - Provision cluster with tf?
 - Replace NATS with Kafka or other alternative?
+- Replace hardcoded currency of EUR

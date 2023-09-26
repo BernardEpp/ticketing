@@ -33,3 +33,14 @@ which should be
   http://ingress-nginx-controller.ingress-nginx.svc.cluster.local
 ```
 ````
+
+## Stipe Modal
+
+We use the package react-stripe-checkout to create a stripe checkout modal.
+
+While in the stripe test/dev mode you can use card details found on the stripe testing site as stripe.com/testing
+
+A possible card is:
+
+BRAND NUMBER CVC DATE
+Visa 4242424242424242 Any 3 digits Any future date
