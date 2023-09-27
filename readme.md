@@ -57,6 +57,12 @@ First sign up or in if you already have an account. Note, that all data gets los
 
 Now you can sell (create) tickets and view available tickets and purchase them.
 
+## CI/CD
+
+###
+
+I use a mono repo approach for this project. This minimizes the overhead to create, access and update multiple repos.
+
 ## Setup a new service
 
 To setup a new node module, create a new directory, cd into it and run:
