@@ -116,6 +116,18 @@ To manually restart a pod, delete it:
    kubectl delete pod [pod_name]
 ```
 
+Lists all available contexts:
+
+```
+   kubectl config view
+```
+
+Use different context
+
+```
+   kubectl config use-context [context_name]
+```
+
 ## Comments
 
 This is part of a course by Stephen Grider - one of my favorite JS teachers - on udemy.
