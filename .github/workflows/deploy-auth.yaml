@@ -8,7 +8,7 @@ on:
       - 'auth/**'
 jobs:
   build:
-    runs-on: ubunu-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - run: cd auth && docker build -t bernardepp/auth .
